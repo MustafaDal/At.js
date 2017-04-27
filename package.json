@@ -1,16 +1,13 @@
 {
-  "name": "at.js",
+  "name": "at-mc",
   "main": "dist/js/jquery.atwho.js",
-  "author": {
-    "name": "chord.luo",
-    "email": "chord.luo@gmail.com"
-  },
-  "homepage": "http://ichord.github.com/At.js",
+  "author": "",
+  "homepage": "",
   "license": "MIT",
   "version": "1.5.3",
   "repository": {
     "type": "git",
-    "url": "https://github.com/ichord/At.js"
+    "url": "git+https://github.com/MustafaDal/At.js.git"
   },
   "engines": {
     "node": ">= 0.6.0"
@@ -50,5 +47,12 @@
       "spec",
       "src"
     ]
+  },
+  "description": "A fork of At.js. **An autocompletion library to autocomplete mentions, smileys etc. just like on Github!**  \r [![Build Status](https://travis-ci.org/ichord/At.js.png)](https://travis-ci.org/ichord/At.js)",
+  "bugs": {
+    "url": "https://github.com/MustafaDal/At.js/issues"
+  },
+  "directories": {
+    "example": "examples"
   }
 }

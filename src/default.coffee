@@ -111,7 +111,7 @@ DEFAULT_CALLBACKS =
     template = tpl
     try
       template = tpl(map) unless typeof tpl == 'string'
-      template.replace /\$\{([^\}]*)\}/g, (tag, key, pos) -> map[key]
+      template.replace /\@\{([^\}]*)\}/g, (tag, key, pos) -> map[key]
     catch error
       ""
 
