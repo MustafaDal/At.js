@@ -4,6 +4,62 @@
  * Homepage: http://ichord.github.com/At.js
  * License: MIT
  */
+ /**
+ * Special language-specific overrides.
+ *
+ * Source: ftp://ftp.unicode.org/Public/UCD/latest/ucd/SpecialCasing.txt
+ *
+ * @type {Object}
+ */
+var LANGUAGES = {
+  tr: {
+    regexp: /\u0130|\u0049|\u0049\u0307/g,
+    map: {
+      '\u0130': '\u0069',
+      '\u0049': '\u0131',
+      '\u0049\u0307': '\u0069'
+    }
+  },
+  az: {
+    regexp: /[\u0130]/g,
+    map: {
+      '\u0130': '\u0069',
+      '\u0049': '\u0131',
+      '\u0049\u0307': '\u0069'
+    }
+  },
+  lt: {
+    regexp: /[\u0049\u004A\u012E\u00CC\u00CD\u0128]/g,
+    map: {
+      '\u0049': '\u0069\u0307',
+      '\u004A': '\u006A\u0307',
+      '\u012E': '\u012F\u0307',
+      '\u00CC': '\u0069\u0307\u0300',
+      '\u00CD': '\u0069\u0307\u0301',
+      '\u0128': '\u0069\u0307\u0303'
+    }
+  }
+}
+
+/**
+ * Lowercase a string.
+ *
+ * @param  {String} str
+ * @return {String}
+ */
+function lowerCase(str, locale) {
+  var lang = LANGUAGES[locale]
+
+  str = str == null ? '' : String(str)
+
+  if (lang) {
+    str = str.replace(lang.regexp, function (m) { return lang.map[m] })
+  }
+
+  return str.toLowerCase()
+}
+
+
 (function (root, factory) {
   if (typeof define === 'function' && define.amd) {
     // AMD. Register as an anonymous module unless amdModuleId is set
@@ -50,7 +106,7 @@ DEFAULT_CALLBACKS = {
     _a = decodeURI("%C3%80");
     _y = decodeURI("%C3%BF");
     space = acceptSpaceBar ? "\ " : "";
-    regexp = new RegExp(flag + "([A-Za-z" + _a + "-" + _y + "0-9_" + space + "\'\.\+\-]*)$|" + flag + "([^\\x00-\\xff]*)$", 'gi');
+    regexp = new RegExp(flag + "([A-Za-zIıİiŞşÖöÇçÜüĞğ" + _a + "-" + _y + "0-9_" + space + "\'\.\+\-]*)$|" + flag + "([^\\x00-\\xff]*)$", 'gi');
     match = regexp.exec(subtext);
     if (match) {
       return match[2] || match[1];
@@ -61,9 +117,11 @@ DEFAULT_CALLBACKS = {
   filter: function(query, data, searchKey) {
     var _results, i, item, len;
     _results = [];
+    console.log(data)
     for (i = 0, len = data.length; i < len; i++) {
       item = data[i];
-      if (~new String(item[searchKey]).toLowerCase().indexOf(query.toLowerCase())) {
+      console.log(item[searchKey])
+      if (lowerCase(~new String(item[searchKey]), 'tr').indexOf(lowerCase(query, 'tr'))) {
         _results.push(item);
       }
     }
@@ -78,7 +136,7 @@ DEFAULT_CALLBACKS = {
     _results = [];
     for (i = 0, len = items.length; i < len; i++) {
       item = items[i];
-      item.atwho_order = new String(item[searchKey]).toLowerCase().indexOf(query.toLowerCase());
+      item.atwho_order = lowerCase(new String(item[searchKey]), 'tr').indexOf(lowerCase(query, 'tr'));
       if (item.atwho_order > -1) {
         _results.push(item);
       }
