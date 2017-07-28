@@ -1,3 +1,7 @@
+**This fork of At.js has a locale aware lowerCase() function that can handle non-ascii chars that languages like Turkish contains, like çöğüşıÇÖĞÜŞİ**
+
+**And JavaScript development is continues on the non-minified JavaScript file found in dist directory. Coffee files found in src is not used as src to build anything**
+
 **An autocompletion library to autocomplete mentions, smileys etc. just like on Github!**  
 [![Build Status](https://travis-ci.org/ichord/At.js.png)](https://travis-ci.org/ichord/At.js)
 
@@ -64,4 +68,3 @@ You can include At.js in your `Rails` application using the gem [jquery-atwho-ra
 ### Core Team Members
 
 * [@ichord](https://twitter.com/_ichord) (twitter)
-
