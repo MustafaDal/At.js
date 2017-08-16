@@ -291,7 +291,7 @@ App = (function() {
         var c;
         if (c = _this.controller()) {
           c.expectedQueryCBId = null;
-          return c.view.hide(e, c.getOpt("displayTimeout"));
+          // return c.view.hide(e, c.getOpt("displayTimeout"));
         }
       };
     })(this)).on('click.atwhoInner', (function(_this) {
