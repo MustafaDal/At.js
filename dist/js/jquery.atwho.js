@@ -117,10 +117,8 @@ DEFAULT_CALLBACKS = {
   filter: function(query, data, searchKey) {
     var _results, i, item, len;
     _results = [];
-    console.log(data)
     for (i = 0, len = data.length; i < len; i++) {
       item = data[i];
-      console.log(item[searchKey])
       if (lowerCase(~new String(item[searchKey]), 'tr').indexOf(lowerCase(query, 'tr'))) {
         _results.push(item);
       }
