@@ -168,7 +168,7 @@ DEFAULT_CALLBACKS = {
       return '> ' + $1 + '<strong>' + $2 + '</strong>' + $3 + ' <';
     });
   },
-  beforeInsert: function(value, $li, e) {
+  beforeInsert: function (value, $li, e) {
     return value;
   },
   beforeReposition: function(offset) {
@@ -545,7 +545,7 @@ Controller = (function() {
     query = this.catchQuery(e);
     if (!query) {
       this.expectedQueryCBId = null;
-      return query;
+      return this.query;
     }
     this.app.setContextFor(this.at);
     if (wait = this.getOpt('delay')) {
@@ -553,7 +553,7 @@ Controller = (function() {
     } else {
       this._lookUp(query);
     }
-    return query;
+    return this.query;
   };
 
   Controller.prototype._delayLookUp = function(query, wait) {
@@ -795,12 +795,14 @@ EditableController = (function(superClass) {
       }
     }
     $(range.startContainer).closest('.atwho-inserted').addClass('atwho-query').siblings().removeClass('atwho-query');
-    if (($query = $(".atwho-query", this.app.document)).length > 0 && $query.is(':empty') && $query.text().length === 0) {
+    $query = $(".atwho-query", this.app.document)
+    if ($query.length > 0 && $query.is(':empty') && $query.text().length === 0) {
       $query.remove();
     }
     if (!this._movingEvent(e)) {
       $query.removeClass('atwho-inserted');
     }
+
     if ($query.length > 0) {
       switch (e.which) {
         case KEY_CODE.LEFT:
@@ -845,11 +847,13 @@ EditableController = (function(superClass) {
         el: $query
       };
       this.trigger("matched", [this.at, query.text]);
-      return this.query = query;
+      this.query = query;
+      return this.query;
     } else {
       this.view.hide();
       this.query = {
-        el: $query
+        el: $query,
+        text : matched
       };
       if ($query.text().indexOf(this.at) >= 0) {
         if (this._movingEvent(e) && $query.hasClass('atwho-inserted')) {
@@ -884,7 +888,7 @@ EditableController = (function(superClass) {
     }
     suffix = (suffix = this.getOpt('suffix')) === "" ? suffix : suffix || "\u00A0";
     data = $li.data('item-data');
-    this.query.el.removeClass('atwho-query').addClass('atwho-inserted').html(content).attr('data-atwho-at-query', "" + data['atwho-at'] + this.query.text).attr('contenteditable', "false");
+    this.query.el.removeClass('atwho-query').addClass('atwho-inserted').html(content).attr('data-atwho-at-query', (this.query.text != null ? "" + data['atwho-at'] + this.query.text : "") ).attr('contenteditable', "false");
     if (range = this._getRange()) {
       if (this.query.el.length) {
         range.setEndAfter(this.query.el[0]);
